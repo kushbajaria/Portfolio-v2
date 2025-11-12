@@ -1,20 +1,16 @@
-import React from "react";
-import ParticleEffect from "./ParticleEffect";
+import ParticlesBackground from "./ParticlesBackground";
 
 export default function Hero() {
   return (
-    <div className="relative flex flex-col items-center justify-center text-center min-h-screen px-4">
-      {/* Animated background */}
-      <ParticleEffect />
-
-      {/* Hero content */}
+    <div className="relative flex flex-col items-center justify-center min-h-screen px-4 bg-black">
+      <ParticlesBackground />
+      <div className="relative z-10 flex flex-col items-center justify-center">
       <h1 className="text-5xl md:text-7xl font-bold mb-4 text-cyan-400 hover:scale-105 transition duration-300">
         Kush Bajaria
       </h1>
-      <p className="text-xl md:text-2xl text-gray-300 mb-8">
-        Software Developer • Innovator • Problem Solver
+      <p className="text-xl md:text-2xl text-gray-300 mb-8 text-center">
+        Software Developer • Innovator
       </p>
-
       <div className="flex gap-4">
         <a
           href="#projects"
@@ -29,6 +25,7 @@ export default function Hero() {
           Contact Me
         </a>
       </div>
+    </div>
     </div>
   );
 }

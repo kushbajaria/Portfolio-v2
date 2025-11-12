@@ -1,18 +1,13 @@
-import Navbar from "./assets/Navbar";
-import Hero from "./assets/Hero";
-import About from "./assets/About";
-import Projects from "./assets/Projects";
-import Contact from "./assets/Contact";
-import Footer from "./assets/Footer";
+import Landing from "./assets/Landing";
+import ThemeToggle from "./assets/ThemeToggle";
 
 function App() {
   return (
-    <div className="bg-black text-white font-mono scroll-smooth">
-      <Navbar />
-      <section id="hero" className="relative min-h-screen flex items-center justify-center">
-        <Hero />
-      </section>
-      {/* Other sections */}
+    <div className="absolute top-4 right-4"><ThemeToggle />
+      <ThemeToggle />
+    </div>,
+    <div className="font-mono scroll-smooth">
+      <Landing />
     </div>
   );
 }
