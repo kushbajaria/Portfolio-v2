@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-export default function Typewriter({ phrases = [], speed = 80, pause = 1500 }) {
+export default function Typewriter({ phrases = [], speed = 80, pause = 1500, className = "text-lg md:text-xl text-gray-200", showCursor = true }) {
   const [index, setIndex] = useState(0);
   const [subIndex, setSubIndex] = useState(0);
   const [deleting, setDeleting] = useState(false);
@@ -32,9 +32,9 @@ export default function Typewriter({ phrases = [], speed = 80, pause = 1500 }) {
   }, [subIndex, index, deleting, phrases, speed, pause]);
 
   return (
-    <div className="text-lg md:text-xl text-gray-200">
-      <span className="font-semibold text-cyan-300">{phrases[index % phrases.length].substring(0, subIndex)}</span>
-      <span className="opacity-90">&nbsp;|</span>
+    <div className={className}>
+      <span className="font-semibold">{phrases[index % phrases.length].substring(0, subIndex)}</span>
+      {showCursor && <span className="ml-1 opacity-80 animate-pulse">|</span>}
     </div>
   );
 }

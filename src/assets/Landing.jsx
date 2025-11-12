@@ -18,16 +18,16 @@ export default function Landing() {
       <section className="px-6 py-12 max-w-5xl mx-auto">
         <div className="mb-8 text-center">
           <Typewriter
-            phrases={[
-              "Skills"
-            ]}
+            phrases={["Skills"]}
+            showCursor={false}
+            className="text-2xl font-semibold text-cyan-300"
           />
         </div>
 
         <Skills />
 
         <div className="mt-12">
-          <h2 className="text-2xl font-semibold mb-4">Selected Repositories</h2>
+          <h2 className="text-2xl font-semibold mb-4 text-cyan-300 text-center">Projects</h2>
           <Suspense
             fallback={
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

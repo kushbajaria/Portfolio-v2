@@ -23,14 +23,14 @@ export default function GitHubRepos({ username }) {
   if (!repos.length) return <div className="text-gray-400">No repos found.</div>;
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
       {repos.map((r) => (
         <a
           key={r.id}
           href={r.html_url}
           target="_blank"
           rel="noreferrer"
-          className="block p-4 bg-slate-800 rounded-lg hover:scale-105 transition-transform"
+          className="block h-full p-4 bg-slate-800 rounded-lg hover:scale-105 transition-transform"
         >
           <h3 className="font-semibold text-cyan-300">{r.name}</h3>
           <p className="text-sm text-gray-300 mt-1">{r.description}</p>
