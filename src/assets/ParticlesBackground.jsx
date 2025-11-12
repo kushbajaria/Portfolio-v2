@@ -30,7 +30,9 @@ export default function ParticlesBackground() {
 
     function computeCount() {
       const base = Math.min(140, Math.floor(area() / 9000));
-      PARTICLE_COUNT = Math.max(30, base);
+      // reduce on narrow screens for performance
+      const narrow = width < 600 ? Math.floor(base * 0.6) : base;
+      PARTICLE_COUNT = Math.max(20, narrow);
     }
 
     const particles = [];
@@ -44,14 +46,30 @@ export default function ParticlesBackground() {
           vx: (Math.random() - 0.5) * 0.6,
           vy: (Math.random() - 0.5) * 0.6,
           r: 1 + Math.random() * 2,
+          pz: (Math.random() - 0.5) * 0.8, // parallax depth
         });
       }
     }
 
+    let lastMove = 0;
     function onMouseMove(e) {
+      const now = Date.now();
+      if (now - lastMove < 16) return; // ~60fps throttle
+      lastMove = now;
       const rect = canvas.getBoundingClientRect();
       mouse.current.x = e.clientX - rect.left;
       mouse.current.y = e.clientY - rect.top;
+    }
+
+    function onTouchMove(e) {
+      const now = Date.now();
+      if (now - lastMove < 16) return;
+      lastMove = now;
+      const rect = canvas.getBoundingClientRect();
+      const t = e.touches && e.touches[0];
+      if (!t) return;
+      mouse.current.x = t.clientX - rect.left;
+      mouse.current.y = t.clientY - rect.top;
     }
 
     function onLeave() {
@@ -59,16 +77,33 @@ export default function ParticlesBackground() {
       mouse.current.y = null;
     }
 
+    let lastScroll = window.scrollY || 0;
     function step() {
       ctx.clearRect(0, 0, width, height);
 
-      // subtle radial gradient background
+      // subtle gradient background (theme-aware)
+      const isDark = document.documentElement.classList.contains("dark");
       const g = ctx.createLinearGradient(0, 0, width, height);
-      g.addColorStop(0, "rgba(2,6,23,0.7)");
-      g.addColorStop(0.5, "rgba(8,16,40,0.6)");
-      g.addColorStop(1, "rgba(2,6,23,0.7)");
+      if (isDark) {
+        g.addColorStop(0, "rgba(6,10,20,0.7)");
+        g.addColorStop(0.5, "rgba(12,18,34,0.6)");
+        g.addColorStop(1, "rgba(6,10,20,0.7)");
+      } else {
+        g.addColorStop(0, "rgba(245,246,250,0.95)");
+        g.addColorStop(0.5, "rgba(235,236,240,0.95)");
+        g.addColorStop(1, "rgba(245,246,250,0.95)");
+      }
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, width, height);
+
+  // read time for color cycling
+  const t = Date.now();
+      // base greys - cycle lightness subtly
+      const baseLight = isDark ? 140 : 170; // middle grey tones
+      const baseDark = isDark ? 100 : 130;
+      const pulse = Math.floor(8 * Math.sin(t / 2000));
+      const c1 = Math.max(80, Math.min(220, baseDark + pulse));
+      const c2 = Math.max(100, Math.min(240, baseLight - pulse));
 
       // update particles
       for (let i = 0; i < particles.length; i++) {
@@ -102,6 +137,11 @@ export default function ParticlesBackground() {
 
       // draw connections
       ctx.lineWidth = 1;
+  // parallax based on scroll
+  const scrollY = window.scrollY || 0;
+  const scrollDelta = scrollY - lastScroll;
+  lastScroll = scrollY;
+
       for (let i = 0; i < particles.length; i++) {
         const a = particles[i];
         for (let j = i + 1; j < particles.length; j++) {
@@ -112,11 +152,22 @@ export default function ParticlesBackground() {
           const max = 140;
           if (dist < max) {
             const alpha = 0.6 * (1 - dist / max);
-            ctx.strokeStyle = `rgba(34,211,238,${alpha})`;
+            // color blend between two greys
+            const stroke = `rgba(${c2},${c2},${c2},${alpha * 0.9})`;
+            ctx.save();
+            ctx.strokeStyle = stroke;
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = `rgba(${c2},${c2},${c2},${alpha * 0.8})`;
             ctx.beginPath();
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(b.x, b.y);
+            // parallax offset when drawing lines
+            const ax = a.x + (scrollY * 0.02) * a.pz;
+            const ay = a.y + (scrollY * 0.02) * a.pz;
+            const bx = b.x + (scrollY * 0.02) * b.pz;
+            const by = b.y + (scrollY * 0.02) * b.pz;
+            ctx.moveTo(ax, ay);
+            ctx.lineTo(bx, by);
             ctx.stroke();
+            ctx.restore();
           }
         }
       }
@@ -124,10 +175,17 @@ export default function ParticlesBackground() {
       // draw particles as subtle dots with glow
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
+        ctx.save();
         ctx.beginPath();
-        ctx.fillStyle = "rgba(34,211,238,0.9)";
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        const px = p.x + (scrollY * 0.02) * p.pz;
+        const py = p.y + (scrollY * 0.02) * p.pz;
+        const alpha = 0.9;
+        ctx.fillStyle = `rgba(${c1},${c1},${c1},${alpha})`;
+        ctx.shadowBlur = 12;
+        ctx.shadowColor = `rgba(${c1},${c1},${c1},0.6)`;
+        ctx.arc(px, py, p.r + (p.pz + 0.4), 0, Math.PI * 2);
         ctx.fill();
+        ctx.restore();
       }
 
       rafRef.current = requestAnimationFrame(step);
@@ -148,8 +206,10 @@ export default function ParticlesBackground() {
     });
     ro.observe(canvas);
     window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
     window.addEventListener("mouseout", onLeave);
     window.addEventListener("mouseleave", onLeave);
+    window.addEventListener("touchend", onLeave);
 
     start();
 
@@ -157,8 +217,10 @@ export default function ParticlesBackground() {
       cancelAnimationFrame(rafRef.current);
       ro.disconnect();
       window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("touchmove", onTouchMove);
       window.removeEventListener("mouseout", onLeave);
       window.removeEventListener("mouseleave", onLeave);
+      window.removeEventListener("touchend", onLeave);
     };
   }, []);
 
