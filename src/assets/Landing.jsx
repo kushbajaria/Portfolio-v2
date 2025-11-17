@@ -3,6 +3,7 @@ import Hero from "./Hero";
 import Typewriter from "./Typewriter";
 import Skills from "./Skills";
 import ThemeToggle from "./ThemeToggle";
+import AboutFull from "./AboutFull";
 
 const GitHubRepos = React.lazy(() => import("./GitHubRepos"));
 
@@ -47,9 +48,12 @@ export default function Landing() {
         <ThemeToggle />
       </div>
 
-      <Hero />
+  <Hero />
 
-      <section className="px-6 py-12 max-w-5xl mx-auto">
+  {/* standalone About section, separate from Skills/Projects */}
+  <AboutFull />
+
+  <section className="px-6 py-12 max-w-5xl mx-auto">
         <div className="mb-8 text-center">
           <Typewriter
             phrases={["Skills"]}
