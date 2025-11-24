@@ -4,6 +4,7 @@ import Typewriter from "./Typewriter";
 import Skills from "./Skills";
 import ThemeToggle from "./ThemeToggle";
 import AboutFull from "./AboutFull";
+import Footer from "./Footer";
 
 const GitHubRepos = React.lazy(() => import("./GitHubRepos"));
 
@@ -81,6 +82,7 @@ export default function Landing() {
           </Suspense>
         </div>
       </section>
+      <Footer />
     </div>
   );
 }
