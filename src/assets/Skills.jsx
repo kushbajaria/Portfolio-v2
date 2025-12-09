@@ -33,8 +33,8 @@ function SkillCard({ title, children }) {
 
 export default function Skills() {
   const skills = [
-    { title: "Frontend", desc: "React, Vite, Tailwind, TypeScript" },
-    { title: "Backend", desc: "Python, C++, HTML, SQL, Java, CSS, Node.js" },
+    { title: "Frontend", desc: "React, HTML, CSS, Vite, Tailwind, TypeScript" },
+    { title: "Backend", desc: "Python, C++, C#, SQL, Java, Node.js" },
     { title: "DevOps", desc: "GitHub Actions, Docker, CI/CD" },
   ];
 

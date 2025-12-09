@@ -24,15 +24,24 @@ export default function ParticlesBackground() {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
 
-    // particles grid
+    // performance-sensitive particle count calculation
     const area = () => width * height;
-    let PARTICLE_COUNT = 80;
+    let PARTICLE_COUNT = 60;
 
     function computeCount() {
-      const base = Math.min(140, Math.floor(area() / 9000));
-      // reduce on narrow screens for performance
-      const narrow = width < 600 ? Math.floor(base * 0.6) : base;
-      PARTICLE_COUNT = Math.max(20, narrow);
+      const areaBase = Math.floor(area() / 10000);
+      const deviceMemory = navigator.deviceMemory || 4;
+      const hw = navigator.hardwareConcurrency || 4;
+      const reducedMotion = typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      // base scales with area, clamped
+      let base = Math.min(120, Math.max(20, areaBase));
+      // reduce aggressively on low memory or reduced motion
+      if (deviceMemory <= 2 || hw <= 2 || reducedMotion) base = Math.floor(base * 0.45);
+      // reduce on narrow screens
+      if (width < 600) base = Math.floor(base * 0.6);
+
+      PARTICLE_COUNT = Math.max(12, base);
     }
 
     const particles = [];
@@ -43,10 +52,10 @@ export default function ParticlesBackground() {
         particles.push({
           x: Math.random() * width,
           y: Math.random() * height,
-          vx: (Math.random() - 0.5) * 0.6,
-          vy: (Math.random() - 0.5) * 0.6,
-          r: 1 + Math.random() * 2,
-          pz: (Math.random() - 0.5) * 0.8, // parallax depth
+          vx: (Math.random() - 0.5) * 0.5,
+          vy: (Math.random() - 0.5) * 0.5,
+          r: 0.8 + Math.random() * 1.6,
+          pz: (Math.random() - 0.5) * 0.6, // parallax depth
         });
       }
     }
@@ -54,7 +63,7 @@ export default function ParticlesBackground() {
     let lastMove = 0;
     function onMouseMove(e) {
       const now = Date.now();
-      if (now - lastMove < 16) return; // ~60fps throttle
+      if (now - lastMove < 32) return; // throttle pointer updates to ~30fps
       lastMove = now;
       const rect = canvas.getBoundingClientRect();
       mouse.current.x = e.clientX - rect.left;
@@ -63,7 +72,7 @@ export default function ParticlesBackground() {
 
     function onTouchMove(e) {
       const now = Date.now();
-      if (now - lastMove < 16) return;
+      if (now - lastMove < 32) return;
       lastMove = now;
       const rect = canvas.getBoundingClientRect();
       const t = e.touches && e.touches[0];
@@ -78,7 +87,19 @@ export default function ParticlesBackground() {
     }
 
     let lastScroll = window.scrollY || 0;
+    let paused = false;
+    function onVisibility() {
+      paused = document.hidden;
+      if (!paused) {
+        // restart animation loop
+        rafRef.current = requestAnimationFrame(step);
+      } else {
+        cancelAnimationFrame(rafRef.current);
+      }
+    }
+
     function step() {
+      if (document.hidden) return;
       ctx.clearRect(0, 0, width, height);
 
       // subtle gradient background (theme-aware)
@@ -113,10 +134,12 @@ export default function ParticlesBackground() {
         if (mouse.current.x !== null) {
           const dx = p.x - mouse.current.x;
           const dy = p.y - mouse.current.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
+          const dist2 = dx * dx + dy * dy;
           const max = 120;
-          if (dist < max) {
-            const force = (1 - dist / max) * 0.6;
+          const max2 = max * max;
+          if (dist2 < max2 && dist2 > 0.0001) {
+            const dist = Math.sqrt(dist2);
+            const force = (1 - dist / max) * 0.5;
             p.vx += (dx / dist) * force;
             p.vy += (dy / dist) * force;
           }
@@ -135,57 +158,49 @@ export default function ParticlesBackground() {
         if (p.y > height + 10) p.y = -10;
       }
 
-      // draw connections
+      // draw connections (limited per-particle to reduce O(n^2) cost)
       ctx.lineWidth = 1;
-  // parallax based on scroll
-  const scrollY = window.scrollY || 0;
-  const scrollDelta = scrollY - lastScroll;
-  lastScroll = scrollY;
+      const scrollY = window.scrollY || 0;
+      lastScroll = scrollY;
+      const maxLink = 100;
+      const maxLink2 = maxLink * maxLink;
+      const maxPerParticle = 3;
 
       for (let i = 0; i < particles.length; i++) {
         const a = particles[i];
-        for (let j = i + 1; j < particles.length; j++) {
+        let links = 0;
+        for (let j = i + 1; j < particles.length && links < maxPerParticle; j++) {
           const b = particles[j];
           const dx = a.x - b.x;
           const dy = a.y - b.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          const max = 140;
-          if (dist < max) {
-            const alpha = 0.6 * (1 - dist / max);
-            // color blend between two greys
-            const stroke = `rgba(${c2},${c2},${c2},${alpha * 0.9})`;
-            ctx.save();
-            ctx.strokeStyle = stroke;
-            ctx.shadowBlur = 8;
-            ctx.shadowColor = `rgba(${c2},${c2},${c2},${alpha * 0.8})`;
+          const dist2 = dx * dx + dy * dy;
+          if (dist2 < maxLink2) {
+            links++;
+            const alpha = 0.45 * (1 - dist2 / maxLink2);
+            ctx.strokeStyle = `rgba(${c2},${c2},${c2},${alpha})`;
+            // parallax offset when drawing lines (small)
+            const ax = a.x + (scrollY * 0.01) * a.pz;
+            const ay = a.y + (scrollY * 0.01) * a.pz;
+            const bx = b.x + (scrollY * 0.01) * b.pz;
+            const by = b.y + (scrollY * 0.01) * b.pz;
             ctx.beginPath();
-            // parallax offset when drawing lines
-            const ax = a.x + (scrollY * 0.02) * a.pz;
-            const ay = a.y + (scrollY * 0.02) * a.pz;
-            const bx = b.x + (scrollY * 0.02) * b.pz;
-            const by = b.y + (scrollY * 0.02) * b.pz;
             ctx.moveTo(ax, ay);
             ctx.lineTo(bx, by);
             ctx.stroke();
-            ctx.restore();
           }
         }
       }
 
-      // draw particles as subtle dots with glow
+      // draw particles as subtle dots (no heavy shadow)
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
-        ctx.save();
-        ctx.beginPath();
-        const px = p.x + (scrollY * 0.02) * p.pz;
-        const py = p.y + (scrollY * 0.02) * p.pz;
+        const px = p.x + (scrollY * 0.01) * p.pz;
+        const py = p.y + (scrollY * 0.01) * p.pz;
         const alpha = 0.9;
         ctx.fillStyle = `rgba(${c1},${c1},${c1},${alpha})`;
-        ctx.shadowBlur = 12;
-        ctx.shadowColor = `rgba(${c1},${c1},${c1},0.6)`;
+        ctx.beginPath();
         ctx.arc(px, py, p.r + (p.pz + 0.4), 0, Math.PI * 2);
         ctx.fill();
-        ctx.restore();
       }
 
       rafRef.current = requestAnimationFrame(step);
@@ -204,12 +219,14 @@ export default function ParticlesBackground() {
       computeCount();
       initParticles();
     });
+
     ro.observe(canvas);
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("touchmove", onTouchMove, { passive: true });
     window.addEventListener("mouseout", onLeave);
     window.addEventListener("mouseleave", onLeave);
     window.addEventListener("touchend", onLeave);
+    document.addEventListener("visibilitychange", onVisibility);
 
     start();
 
@@ -221,6 +238,7 @@ export default function ParticlesBackground() {
       window.removeEventListener("mouseout", onLeave);
       window.removeEventListener("mouseleave", onLeave);
       window.removeEventListener("touchend", onLeave);
+      document.removeEventListener("visibilitychange", onVisibility);
     };
   }, []);
 
