@@ -23,7 +23,7 @@ function SkillCard({ title, children }) {
       ref={ref}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
-      className="bg-slate-800 p-6 rounded-xl shadow-lg transition-transform duration-200"
+      className="bg-slate-800 p-6 rounded-xl shadow-lg transition-transform duration-200 w-full max-w-xs mx-auto flex flex-col justify-between min-h-[140px]"
     >
       <h3 className="text-lg font-medium text-cyan-300 mb-2">{title}</h3>
       <div className="text-sm text-gray-300">{children}</div>
@@ -40,7 +40,7 @@ export default function Skills() {
 
   return (
     <div className="w-full mx-auto">
-      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 justify-items-center">
+      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
         {skills.map((s) => (
           <SkillCard key={s.title} title={s.title}>
             {s.desc}
