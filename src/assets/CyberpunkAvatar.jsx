@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 
 // Polished interactive cyberpunk avatar
-export default function CyberpunkAvatar({ size = 128, className = "" }) {
+export default function CyberpunkAvatar({ size = "100%", className = "" }) {
   const rootRef = useRef(null);
 
   useEffect(() => {
@@ -42,7 +42,7 @@ export default function CyberpunkAvatar({ size = 128, className = "" }) {
         "--my": 0,
       }}
     >
-      <svg viewBox="0 0 200 200" width={size} height={size} xmlns="http://www.w3.org/2000/svg" className="block" aria-hidden>
+      <svg viewBox="0 0 200 200" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" className="block" aria-hidden>
         <defs>
           <linearGradient id="neon1" x1="0" x2="1">
             <stop offset="0%" stopColor="#06b6d4" />
