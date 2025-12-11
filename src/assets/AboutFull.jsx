@@ -36,16 +36,17 @@ export default function AboutFull() {
             </div>
 
             {/* Right: headline + paragraph + CTA + badges */}
-            <div className="flex-1 text-center md:text-left">
+            <div className="flex-1 text-center md:text-center">
               <h2 className="text-2xl md:text-3xl font-extrabold mb-2 text-slate-900 dark:text-white">
-                Hey! I build web products that actually get used.
+                About Me
               </h2>
 
               <p className="text-sm md:text-base text-slate-700 dark:text-slate-300 leading-relaxed max-w-3xl mb-4">
-                I design and ship full‑stack applications using React, HTML, and Java. I care about performance,
-                accessibility, and developer ergonomics — so teams can move fast without sacrificing quality. Recent work
-                includes building scalable front-ends, designing reliable APIs, and automating deployments. If you want
-                someone who moves quickly, writes tests, and mentors others, we should talk.
+                Aspiring Software Engineer studying at California State University, Fullerton, with a strong drive to build scalable,
+                user-focused applications. I've developed projects ranging from AI-powered health and legal assistants to multiplayer games
+                and shift management platforms, blending creativity with technical precision. Passionate about learning, I constantly explore new tools,
+                languages, and frameworks to push the boundaries of what I can build. I'm excited by the intersection of AI, design, and full-stack development,
+                and I aim to deliver solutions that make a real difference. Let's connect on GitHub or LinkedIn!
               </p>
 
               <div className="w-full flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 justify-center">
