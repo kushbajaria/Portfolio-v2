@@ -8,7 +8,7 @@ export default function Footer() {
     <footer id="contact" className="mt-16 border-t border-slate-200 dark:border-slate-800">
       <div className="max-w-5xl mx-auto px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="text-center md:text-left">
-          <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Contact me</h3>
+          <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-300">Contact me</h3>
           <p className="text-sm text-slate-600 dark:text-slate-300">Available for freelance or full‑time work. Let's build something great.</p>
         </div>
 
