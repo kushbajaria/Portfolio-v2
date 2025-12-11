@@ -42,7 +42,7 @@ export default function IntroGreeting({ name = "Kush Bajaria", role = "Full‑st
   const prefersReduced = typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   return ( 
-    <div className="absolute inset-x-0 top-1/3 z-30 flex justify-center pointer-events-none">
+    <div className="absolute inset-x-0 top-1/4 sm:top-1/3 z-30 flex justify-center pointer-events-none">
       <style>{`
         @keyframes letterIn { from { opacity: 0; transform: translateY(10px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
         @keyframes shimmer { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
@@ -51,7 +51,7 @@ export default function IntroGreeting({ name = "Kush Bajaria", role = "Full‑st
 
       <div className="max-w-3xl text-center px-4">
         <h1
-          className="intro-name text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight"
+          className="intro-name text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight"
           style={{
             WebkitBackgroundClip: "text",
             backgroundClip: "text",
