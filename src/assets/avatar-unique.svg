@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" fill="none">
+  <defs>
+    <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.18"/>
+    </linearGradient>
+  </defs>
+
+  <!-- background circle -->
+  <rect width="240" height="240" rx="30" fill="url(#g1)"/>
+
+  <!-- subtle glass highlight -->
+  <path d="M20 40c40-30 160-30 200 0v140a30 30 0 0 1-30 30H50a30 30 0 0 1-30-30V40z" fill="url(#g2)"/>
+
+  <!-- stylized face -->
+  <g transform="translate(48,44)">
+    <ellipse cx="72" cy="56" rx="48" ry="52" fill="#ffe9d6"/>
+    <!-- hair -->
+    <path d="M20 36c10-28 112-28 128 16 0 0-10-34-68-30-44 3-66 18-88 14z" fill="#2a2542" opacity="0.95"/>
+    <!-- eyes -->
+    <g fill="#2a2542">
+      <ellipse cx="52" cy="60" rx="6" ry="4"/>
+      <ellipse cx="92" cy="60" rx="6" ry="4"/>
+    </g>
+    <!-- smile -->
+    <path d="M56 84c8 8 24 8 36 0" stroke="#2a2542" stroke-width="3" stroke-linecap="round" fill="none"/>
+
+    <!-- collar / shirt -->
+    <path d="M18 120c16-20 112-20 132 0v24H18v-24z" fill="#0ea5a7"/>
+  </g>
+
+  <!-- thin white frame -->
+  <rect x="6" y="6" width="228" height="228" rx="24" fill="none" stroke="#ffffff" stroke-opacity="0.06"/>
+</svg>

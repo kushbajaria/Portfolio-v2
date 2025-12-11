@@ -1,4 +1,5 @@
 import React from "react";
+import CyberpunkAvatar from "./CyberpunkAvatar";
 
 export default function AboutFull() {
   const skills = [
@@ -16,23 +17,8 @@ export default function AboutFull() {
         <div className="bg-gradient-to-b from-white/3 to-white/2 dark:from-slate-900/40 dark:to-slate-900/30 rounded-2xl p-6 md:p-10 backdrop-blur-sm">
           <div className="flex flex-col md:flex-row items-center gap-6">
             {/* Left: circular gradient avatar (inline SVG fallback) */}
-            <div
-              className="w-32 h-32 rounded-full flex-shrink-0 shadow-lg ring-1 ring-white/6 overflow-hidden mx-auto md:mx-0"
-              style={{ background: "linear-gradient(135deg,#06b6d4,#7c3aed)" }}
-            >
-              <svg viewBox="0 0 120 120" width="120" height="120" className="block" aria-hidden>
-                <g transform="translate(10,8)">
-                  <g fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="46" cy="22" r="8" fill="#ffffff" opacity="0.95" />
-                    <path d="M36 34c3-2 6-4 10-4s7 2 10 4c0 0 1.5 3 1.5 6v4H34v-4c0-3.2 1.5-6 1.5-6z" fill="#ffffff" opacity="0.9" />
-                  </g>
-                  <g>
-                    <rect x="6" y="46" width="80" height="34" rx="4" fill="#ffffff" opacity="0.92" />
-                    <rect x="14" y="54" width="64" height="20" rx="3" fill="#0f172a" opacity="0.06" />
-                    <rect x="44" y="82" width="32" height="6" rx="1" fill="#ffffff" opacity="0.9" />
-                  </g>
-                </g>
-              </svg>
+            <div className="w-32 h-32 rounded-full flex-shrink-0 shadow-lg ring-1 ring-white/6 overflow-hidden mx-auto md:mx-0" style={{ background: "linear-gradient(135deg,#06b6d4,#7c3aed)" }}>
+              <CyberpunkAvatar size={128} />
             </div>
 
             {/* Right: headline + paragraph + CTA + badges */}
