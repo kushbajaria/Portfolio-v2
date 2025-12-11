@@ -5,6 +5,6 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   // When deploying to GitHub Pages for a repo site, set base to `/{repo-name}/`.
   // Update this if your repo is named differently or you use a custom domain.
-  base: '/Users/kush/Documents/Personal Github/Portfolio-v2',
+  base: '/Portfolio-v2/',
   plugins: [react()],
 })
