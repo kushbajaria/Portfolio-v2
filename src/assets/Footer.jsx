@@ -12,7 +12,7 @@ export default function Footer() {
           <p className="text-sm text-slate-600 dark:text-slate-300">Available for freelance or full‑time work. Let's build something great.</p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3 justify-center md:justify-end w-full md:w-auto">
             <a
               href="mailto:bajariakush@gmail.com"
               className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-white border border-slate-200 text-slate-900 shadow-sm hover:bg-slate-50 dark:bg-white/5 dark:text-white dark:border-slate-700 dark:hover:bg-white/10 transition"
