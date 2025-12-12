@@ -22,7 +22,7 @@ export default function Footer() {
               <path d="M3 6.5v11a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               <path d="M21 6.5l-9 6-9-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-            <span className="ml-1" style={{ color: isDark ? "#ffffff" : "#0f172a" }}>Email</span>
+            <span className="ml-1" style={{ color: isDark ? "#ffffff" : " #0f172a" }}>Email</span>
           </a>
 
           <a

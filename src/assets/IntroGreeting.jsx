@@ -56,6 +56,7 @@ export default function IntroGreeting({ name = "Kush Bajaria", role = "Full‑st
             WebkitBackgroundClip: "text",
             backgroundClip: "text",
             color: "transparent",
+            WebkitTextFillColor: "transparent",
             backgroundImage: isDark ? gradientDark : gradientLight,
             backgroundSize: done ? "200% 100%" : "100% 100%",
             animation: done && !prefersReduced ? "shimmer 3.5s linear infinite" : undefined,
