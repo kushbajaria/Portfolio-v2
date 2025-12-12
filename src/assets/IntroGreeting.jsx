@@ -91,6 +91,12 @@ export default function IntroGreeting({ name = "Kush Bajaria", role = "Full‑st
                   transform: i < visibleCount ? "none" : "translateY(10px) scale(0.98)",
                   animation: i < visibleCount || prefersReduced ? undefined : `letterIn 360ms forwards ${i * 22}ms`,
                   willChange: "transform, opacity",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                  color: "transparent",
+                  backgroundImage: isDark ? gradientDark : gradientLight,
+                  backgroundSize: done ? "200% 100%" : "100% 100%",
                 }}
               >
                 {ch}
