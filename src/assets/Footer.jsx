@@ -2,6 +2,7 @@ import React from "react";
 
 export default function Footer() {
   const year = new Date().getFullYear();
+  const resumeUrl = `${import.meta.env.BASE_URL}Kush-Bajaria-Resume.pdf`;
 
   return (
     <footer id="contact" className="mt-16 border-t border-slate-200 dark:border-slate-800">
@@ -52,17 +53,17 @@ export default function Footer() {
           </a>
 
           <a
-            href="/kush-bajaria-resume.pdf" 
+            href={resumeUrl}
             download="Kush-Bajaria-Resume.pdf"
             className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-cyan-600 text-white hover:bg-cyan-500 transition"
             aria-label="Download resume"
           >
-            <svg className="text-white" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-              <path d="M12 3v12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M8 11l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              <rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor" strokeWidth="1.2" />
-            </svg>
-            <span className="ml-1 text-white">Resume</span>
+              <svg className="text-white" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                <path d="M12 3v12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M8 11l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                <rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor" strokeWidth="1.2" />
+              </svg>
+              <span className="ml-1 text-white">Resume</span>
           </a>
         </div>
 
