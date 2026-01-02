@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-// Polished interactive cyberpunk avatar
+// Interactive avatar that highlights coding skills
 export default function CyberpunkAvatar({ size = "100%", className = "" }) {
   const rootRef = useRef(null);
 
@@ -44,13 +44,17 @@ export default function CyberpunkAvatar({ size = "100%", className = "" }) {
     >
       <svg viewBox="0 0 200 200" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" className="block" aria-hidden>
         <defs>
-          <linearGradient id="neon1" x1="0" x2="1">
-            <stop offset="0%" stopColor="#06b6d4" />
-            <stop offset="100%" stopColor="#7c3aed" />
+          <linearGradient id="neonBlue" x1="0" x2="1">
+            <stop offset="0%" stopColor="#22d3ee" />
+            <stop offset="100%" stopColor="#6366f1" />
           </linearGradient>
-          <linearGradient id="neon2" x1="0" x2="1">
-            <stop offset="0%" stopColor="#ff6bcb" />
-            <stop offset="100%" stopColor="#06b6d4" />
+          <linearGradient id="neonPink" x1="0" x2="1">
+            <stop offset="0%" stopColor="#f472b6" />
+            <stop offset="100%" stopColor="#22d3ee" />
+          </linearGradient>
+          <linearGradient id="neonGold" x1="0" x2="1">
+            <stop offset="0%" stopColor="#fbbf24" />
+            <stop offset="100%" stopColor="#f59e0b" />
           </linearGradient>
           <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="3" result="b" />
@@ -59,89 +63,77 @@ export default function CyberpunkAvatar({ size = "100%", className = "" }) {
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
-          <clipPath id="circleClip">
-            <circle cx="100" cy="100" r="86" />
-          </clipPath>
+          <radialGradient id="bg" cx="0.5" cy="0.45" r="0.7">
+            <stop offset="0%" stopColor="#0f172a" />
+            <stop offset="100%" stopColor="#020617" />
+          </radialGradient>
         </defs>
 
-        {/* subtle neon backdrop */}
-        <rect x="6" y="6" width="188" height="188" rx="28" fill="#030416" />
+        <rect x="8" y="8" width="184" height="184" rx="28" fill="url(#bg)" stroke="rgba(255,255,255,0.05)" />
 
-        {/* inner panel with neon stroke */}
-        <g clipPath="url(#circleClip)">
-          <rect x="24" y="24" width="152" height="152" rx="20" fill="#071026" stroke="url(#neon1)" strokeWidth="1.6" />
+        {/* orbiting ring */}
+        <g stroke="url(#neonBlue)" strokeWidth="1.6" opacity="0.7">
+          <circle cx="100" cy="100" r="84" fill="none" />
+          <path d="M28 104c18-6 40-9 72-9s54 3 72 9" fill="none" strokeLinecap="round" />
+        </g>
 
-          {/* cyber head (parallax) */}
-          <g style={{ transform: 'translate(calc(var(--mx) * 6px), calc(var(--my) * 6px))' }}>
-            {/* headphones: neon headband + earcups */}
-            <g aria-hidden="true">
-              <path
-                  d="M40 60 Q100 8 160 60"
-                  fill="none"
-                  stroke="url(#neon1)"
-                  strokeWidth="4"
-                  strokeLinecap="round"
-                  filter="url(#glow)"
-                >
-                <animate attributeName="stroke-width" values="3;5;3" dur="3.5s" repeatCount="indefinite" />
-              </path>
+        {/* parallax coding cluster */}
+        <g style={{ transform: 'translate(calc(var(--mx) * 6px), calc(var(--my) * 6px))' }}>
+          {/* glowing chips */}
+          <g opacity="0.8">
+            <rect x="38" y="54" width="34" height="18" rx="5" fill="rgba(34,211,238,0.12)" stroke="url(#neonBlue)" strokeWidth="1.4" filter="url(#glow)" />
+            <rect x="130" y="52" width="32" height="16" rx="5" fill="rgba(244,114,182,0.12)" stroke="url(#neonPink)" strokeWidth="1.4" filter="url(#glow)" />
+            <rect x="46" y="130" width="30" height="14" rx="4" fill="rgba(251,191,36,0.12)" stroke="url(#neonGold)" strokeWidth="1.2" filter="url(#glow)" />
+          </g>
 
-              {/* left earcup */}
-              <g transform="translate(28,86)">
-                <rect x="0" y="0" width="28" height="36" rx="8" fill="url(#neon2)" opacity="0.98" />
-                <rect x="4" y="6" width="20" height="24" rx="6" fill="#071026" opacity="0.85" />
-                <rect x="6" y="10" width="16" height="16" rx="4" fill="url(#neon1)" opacity="0.9" />
-              </g>
+          {/* main terminal */}
+          <g>
+            <rect x="46" y="68" width="108" height="70" rx="12" fill="#0b1220" stroke="url(#neonBlue)" strokeWidth="1.6" />
+            <rect x="46" y="68" width="108" height="18" rx="12" fill="rgba(255,255,255,0.04)" />
+            <circle cx="60" cy="77" r="3" fill="#ef4444" />
+            <circle cx="68" cy="77" r="3" fill="#fbbf24" />
+            <circle cx="76" cy="77" r="3" fill="#22c55e" />
 
-              {/* right earcup (mirrored) */}
-              <g transform="translate(144,86)">
-                <rect x="0" y="0" width="28" height="36" rx="8" fill="url(#neon2)" opacity="0.98" />
-                <rect x="4" y="6" width="20" height="24" rx="6" fill="#071026" opacity="0.85" />
-                <rect x="6" y="10" width="16" height="16" rx="4" fill="url(#neon1)" opacity="0.9" />
-              </g>
-            </g>
-            <ellipse cx="100" cy="94" rx="56" ry="74" fill="#0b1220" />
-            <path d="M48 58c10-26 104-26 104 6v12H48z" fill="#0f172a" opacity="0.96" />
-
-            <g stroke="url(#neon2)" strokeWidth="1.4" strokeLinecap="round" opacity="0.95" filter="url(#glow)">
-              <path d="M76 76c8-4 24-6 48 0" fill="none" />
-              <path d="M100 52v12" />
-            </g>
-
-            <ellipse cx="82" cy="92" rx="5.6" ry="4.2" fill="#071026" stroke="#7c3aed" strokeWidth="1.4" filter="url(#glow)" />
-            <ellipse cx="118" cy="92" rx="5.6" ry="4.2" fill="#071026" stroke="#ff6bcb" strokeWidth="1.4" filter="url(#glow)" />
-
-            {/* smiling mouth: layered neon curve + soft inner line for depth */}
-            <g aria-hidden="true">
-              <path
-                d="M70 124 Q100 144 130 124"
-                fill="none"
-                stroke="url(#neon1)"
-                strokeWidth="3.8"
-                strokeLinecap="round"
-                filter="url(#glow)"
-                opacity="0.98"
-              />
-              <path
-                d="M78 128 Q100 138 122 128"
-                fill="none"
-                stroke="rgba(11,18,32,0.6)"
-                strokeWidth="1.2"
-                strokeLinecap="round"
-                opacity="0.9"
-              />
+            {/* code lines */}
+            <g strokeLinecap="round" strokeWidth="2">
+              <line x1="60" y1="94" x2="120" y2="94" stroke="url(#neonBlue)" />
+              <line x1="60" y1="104" x2="136" y2="104" stroke="url(#neonPink)" />
+              <line x1="60" y1="114" x2="114" y2="114" stroke="#38bdf8" />
+              <line x1="60" y1="124" x2="132" y2="124" stroke="#a855f7" />
             </g>
           </g>
 
-          {/* scanline */}
-          <rect x="24" y="24" width="152" height="152" fill="url(#neon2)" opacity="0.02">
-            <animate attributeName="x" values="24;176" dur="3s" repeatCount="indefinite" />
-          </rect>
+          {/* laptop silhouette */}
+          <g opacity="0.9">
+            <rect x="70" y="118" width="60" height="8" rx="4" fill="#0f172a" stroke="rgba(255,255,255,0.08)" />
+            <rect x="60" y="126" width="80" height="14" rx="6" fill="#0a101d" stroke="url(#neonBlue)" strokeWidth="1.2" />
+            <rect x="76" y="132" width="48" height="4" rx="2" fill="#1f2937" />
+          </g>
+
+          {/* floating symbols */}
+          <g fontFamily="'SF Mono', 'JetBrains Mono', monospace" fontSize="12" fontWeight="700" fill="#e2e8f0" opacity="0.85" filter="url(#glow)">
+            <text x="34" y="110" fill="#22d3ee">{`{}`}</text>
+            <text x="150" y="120" fill="#f472b6">{`</>`}</text>
+            <text x="112" y="64" fill="#fbbf24">AI</text>
+          </g>
+
+          {/* signal arcs */}
+          <g stroke="url(#neonPink)" strokeWidth="1.2" strokeLinecap="round" opacity="0.8" filter="url(#glow)">
+            <path d="M94 58 Q100 50 106 58" fill="none" />
+            <path d="M90 54 Q100 42 110 54" fill="none" opacity="0.7" />
+          </g>
         </g>
 
-        {/* outer ring */}
-        <circle cx="100" cy="100" r="92" fill="none" stroke="rgba(124,58,237,0.12)" strokeWidth="2" />
+        {/* subtle grid */}
+        <g stroke="rgba(255,255,255,0.04)" strokeWidth="0.6">
+          <path d="M100 14v172" />
+          <path d="M14 100h172" />
+          <path d="M42 32v136" />
+          <path d="M158 32v136" />
+        </g>
 
+        {/* outer glow ring */}
+        <circle cx="100" cy="100" r="92" fill="none" stroke="rgba(124,58,237,0.16)" strokeWidth="2" />
       </svg>
 
       <style>{`

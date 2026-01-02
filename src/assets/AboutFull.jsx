@@ -40,7 +40,7 @@ export default function AboutFull() {
                   href="#projects"
                   className="inline-block px-4 py-2 bg-cyan-600 text-white rounded-md font-medium hover:bg-cyan-500 transition"
                 >
-                  View selected projects
+                  View projects
                 </a>
                 <a
                   href="#contact"

@@ -67,7 +67,7 @@ export default function Landing() {
 
         <div id="projects" className="mt-12">
           <h2 className={isDark ? "text-2xl font-semibold mb-4 text-cyan-300 text-center" : "text-2xl font-semibold mb-4 text-cyan-600 text-center"}>
-            Selected Repositories
+            Repositories
           </h2>
           <Suspense
             fallback={
