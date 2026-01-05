@@ -1,7 +1,7 @@
 import React from "react";
-import CyberpunkAvatar from "./CyberpunkAvatar";
 
 export default function AboutFull() {
+  const imageUrl = `${import.meta.env.BASE_URL}about-pic.png`;
   const skills = [
     { id: "py", label: "Python" },
     { id: "cpp", label: "C++" },
@@ -16,9 +16,9 @@ export default function AboutFull() {
       <div className="max-w-5xl mx-auto px-4">
         <div className="bg-gradient-to-b from-white/3 to-white/2 dark:from-slate-900/40 dark:to-slate-900/30 rounded-2xl p-6 md:p-10 backdrop-blur-sm">
           <div className="flex flex-col md:flex-row items-center gap-6">
-            {/* Left: circular gradient avatar (inline SVG fallback) */}
-            <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full flex-shrink-0 shadow-lg ring-1 ring-white/6 overflow-hidden mx-auto md:mx-0" style={{ background: "linear-gradient(135deg,#06b6d4,#7c3aed)" }}>
-              <CyberpunkAvatar />
+            {/* Left: profile picture */}
+            <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full flex-shrink-0 shadow-lg ring-2 ring-cyan-500/50 overflow-hidden mx-auto md:mx-0">
+              <img src={imageUrl} alt="Profile picture" className="w-full h-full object-cover" />
             </div>
 
             {/* Right: headline + paragraph + CTA + badges */}
