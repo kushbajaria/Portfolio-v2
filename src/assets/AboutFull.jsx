@@ -1,7 +1,10 @@
 import React from "react";
+import { useInView, useParallax } from "./useInView";
 
 export default function AboutFull() {
   const imageUrl = `${import.meta.env.BASE_URL}about-pic.png`;
+  const { ref: sectionRef, isInView } = useInView({ threshold: 0.1 });
+  const parallaxRef = useParallax(0.08);
   const skills = [
     { id: "py", label: "Python" },
     { id: "cpp", label: "C++" },
@@ -12,12 +15,15 @@ export default function AboutFull() {
   ];
 
   return (
-    <section id="about" className="py-12">
-      <div className="max-w-5xl mx-auto px-4">
+    <section id="about" className="py-12" ref={sectionRef}>
+      <div className={`max-w-5xl mx-auto px-4 reveal${isInView ? " in-view" : ""}`}>
         <div className="bg-gradient-to-b from-white/3 to-white/2 dark:from-slate-900/40 dark:to-slate-900/30 rounded-2xl p-6 md:p-10 backdrop-blur-sm">
           <div className="flex flex-col md:flex-row items-center gap-6">
-            {/* Left: profile picture */}
-            <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full flex-shrink-0 shadow-lg ring-2 ring-cyan-500/50 overflow-hidden mx-auto md:mx-0">
+            {/* Left: profile picture with subtle parallax */}
+            <div
+              ref={parallaxRef}
+              className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full flex-shrink-0 shadow-lg ring-2 ring-cyan-500/50 overflow-hidden mx-auto md:mx-0 will-change-transform"
+            >
               <img src={imageUrl} alt="Profile picture" className="w-full h-full object-cover" />
             </div>
 
@@ -54,7 +60,7 @@ export default function AboutFull() {
                 {skills.map((s) => (
                   <span
                     key={s.id}
-                    className="inline-flex items-center gap-2 text-xs px-3 py-1 rounded-full bg-white/6 dark:bg-white/5 text-slate-800 dark:text-white"
+                    className="inline-flex items-center gap-2 text-xs px-3 py-1 rounded-full bg-white/6 dark:bg-white/5 text-slate-800 dark:text-white transition-all duration-200 hover:scale-110 hover:shadow-md hover:shadow-cyan-500/20 hover:bg-cyan-500/10 cursor-default"
                     title={s.label}
                   >
                     {s.id === "react" && (

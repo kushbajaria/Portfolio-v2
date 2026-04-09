@@ -1,4 +1,24 @@
 import React, { useEffect, useState } from "react";
+import { useInView } from "./useInView";
+
+function RepoCard({ repo, delay }) {
+  const { ref, isInView } = useInView({ threshold: 0.1 });
+
+  return (
+    <div ref={ref} className={`reveal${isInView ? " in-view" : ""} reveal-delay-${delay}`}>
+      <a
+        href={repo.html_url}
+        target="_blank"
+        rel="noreferrer"
+        className="block h-full p-4 bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 transition-all duration-300 hover:scale-[1.03] hover:shadow-lg hover:shadow-cyan-500/10 hover:border-cyan-400/50 dark:hover:border-cyan-400/40"
+      >
+        <h3 className="font-semibold text-cyan-600 dark:text-cyan-300">{repo.name}</h3>
+        <p className="text-sm text-slate-600 dark:text-gray-300 mt-1">{repo.description}</p>
+        <div className="text-xs text-slate-500 dark:text-gray-400 mt-2">★ {repo.stargazers_count} • {repo.language}</div>
+      </a>
+    </div>
+  );
+}
 
 export default function GitHubRepos({ username }) {
   const [repos, setRepos] = useState([]);
@@ -24,18 +44,8 @@ export default function GitHubRepos({ username }) {
 
   return (
     <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-      {repos.map((r) => (
-        <a
-          key={r.id}
-          href={r.html_url}
-          target="_blank"
-          rel="noreferrer"
-          className="block h-full p-4 bg-slate-800 rounded-lg hover:scale-105 transition-transform"
-        >
-          <h3 className="font-semibold text-cyan-300">{r.name}</h3>
-          <p className="text-sm text-gray-300 mt-1">{r.description}</p>
-          <div className="text-xs text-gray-400 mt-2">★ {r.stargazers_count} • {r.language}</div>
-        </a>
+      {repos.map((r, i) => (
+        <RepoCard key={r.id} repo={r} delay={(i % 3) + 1} />
       ))}
     </div>
   );

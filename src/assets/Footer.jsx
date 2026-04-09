@@ -1,21 +1,23 @@
 import React from "react";
+import { useInView } from "./useInView";
 
 export default function Footer() {
   const year = new Date().getFullYear();
   const resumeUrl = `${import.meta.env.BASE_URL}Kush-Bajaria-Resume.pdf`;
+  const { ref, isInView } = useInView({ threshold: 0.15 });
 
   return (
-    <footer id="contact" className="mt-16 border-t border-slate-200 dark:border-slate-800">
-      <div className="max-w-5xl mx-auto px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
+    <footer id="contact" className="mt-16 border-t border-slate-200 dark:border-slate-800" ref={ref}>
+      <div className={`max-w-5xl mx-auto px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-6 reveal${isInView ? " in-view" : ""}`}>
         <div className="text-center md:text-left">
           <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-300">Contact me</h3>
-          <p className="text-sm text-slate-600 dark:text-slate-300">Available for freelance or full‑time work. Let's build something great.</p>
+          <p className="text-sm text-slate-600 dark:text-slate-300">Available for freelance or full-time work. Let's build something great.</p>
         </div>
 
         <div className="flex flex-wrap items-center gap-3 justify-center md:justify-end w-full md:w-auto">
             <a
               href="mailto:bajariakush@gmail.com"
-              className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-slate-200 border border-slate-400 text-slate-900 shadow-sm hover:bg-slate-300 dark:bg-slate-800 dark:text-white dark:border-slate-600 dark:hover:bg-slate-700 transition"
+              className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-slate-200 border border-slate-400 text-slate-900 shadow-sm hover:bg-slate-300 hover:-translate-y-0.5 hover:shadow-md dark:bg-slate-800 dark:text-white dark:border-slate-600 dark:hover:bg-slate-700 transition-all duration-200"
               aria-label="Send email"
             >
             <svg className="text-slate-900 dark:text-white" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
@@ -29,7 +31,7 @@ export default function Footer() {
             href="https://github.com/kushbajaria"
             target="_blank"
             rel="noreferrer"
-              className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-slate-200 border border-slate-400 text-slate-900 shadow-sm hover:bg-slate-300 dark:bg-slate-800 dark:text-white dark:border-slate-600 dark:hover:bg-slate-700 transition"
+              className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-slate-200 border border-slate-400 text-slate-900 shadow-sm hover:bg-slate-300 hover:-translate-y-0.5 hover:shadow-md dark:bg-slate-800 dark:text-white dark:border-slate-600 dark:hover:bg-slate-700 transition-all duration-200"
               aria-label="GitHub profile"
             >
             <svg className="text-slate-900 dark:text-white" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden>
@@ -42,7 +44,7 @@ export default function Footer() {
             href="https://www.linkedin.com/in/kush-bajaria/"
             target="_blank"
             rel="noreferrer"
-              className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-slate-200 border border-slate-400 text-slate-900 shadow-sm hover:bg-slate-300 dark:bg-slate-800 dark:text-white dark:border-slate-600 dark:hover:bg-slate-700 transition"
+              className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-slate-200 border border-slate-400 text-slate-900 shadow-sm hover:bg-slate-300 hover:-translate-y-0.5 hover:shadow-md dark:bg-slate-800 dark:text-white dark:border-slate-600 dark:hover:bg-slate-700 transition-all duration-200"
               aria-label="LinkedIn profile"
             >
             <svg className="text-slate-900 dark:text-white" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
@@ -55,7 +57,7 @@ export default function Footer() {
           <a
             href={resumeUrl}
             download="Kush-Bajaria-Resume.pdf"
-            className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-cyan-600 text-white hover:bg-cyan-500 transition"
+            className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-cyan-600 text-white hover:bg-cyan-500 hover:-translate-y-0.5 hover:shadow-md hover:shadow-cyan-500/30 transition-all duration-200"
             aria-label="Download resume"
           >
               <svg className="text-white" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>

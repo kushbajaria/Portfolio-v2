@@ -5,6 +5,7 @@ import Skills from "./Skills";
 import ThemeToggle from "./ThemeToggle";
 import AboutFull from "./AboutFull";
 import Footer from "./Footer";
+import { useInView } from "./useInView";
 
 const GitHubRepos = React.lazy(() => import("./GitHubRepos"));
 
@@ -37,6 +38,9 @@ export default function Landing() {
     ? "hidden md:inline-block px-3 py-2 border border-cyan-500 text-cyan-300 rounded-md hover:bg-cyan-500 hover:text-black transition"
     : "hidden md:inline-block px-3 py-2 border border-slate-300 text-slate-700 rounded-md hover:bg-slate-100 hover:text-slate-900 transition";
 
+  const { ref: skillsHeadingRef, isInView: skillsHeadingInView } = useInView({ threshold: 0.3 });
+  const { ref: reposHeadingRef, isInView: reposHeadingInView } = useInView({ threshold: 0.3 });
+
   return (
     <div className={containerClass}>
       <div className="fixed top-4 right-4 z-50 flex items-center gap-3">
@@ -55,7 +59,7 @@ export default function Landing() {
   <AboutFull />
 
   <section className="px-6 py-12 max-w-5xl mx-auto">
-        <div className="mb-8 text-center">
+        <div ref={skillsHeadingRef} className={`mb-8 text-center reveal${skillsHeadingInView ? " in-view" : ""}`}>
           <Typewriter
             phrases={["Skills"]}
             showCursor={false}
@@ -66,9 +70,11 @@ export default function Landing() {
         <Skills />
 
         <div id="projects" className="mt-12">
-          <h2 className={isDark ? "text-2xl font-semibold mb-4 text-cyan-300 text-center" : "text-2xl font-semibold mb-4 text-cyan-600 text-center"}>
-            Repositories
-          </h2>
+          <div ref={reposHeadingRef} className={`reveal${reposHeadingInView ? " in-view" : ""}`}>
+            <h2 className={isDark ? "text-2xl font-semibold mb-4 text-cyan-300 text-center" : "text-2xl font-semibold mb-4 text-cyan-600 text-center"}>
+              Repositories
+            </h2>
+          </div>
           <Suspense
             fallback={
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
