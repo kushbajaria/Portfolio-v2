@@ -2,42 +2,126 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Smooth scrolling */
+/* ── Smooth scrolling ─────────────────────────────────────────────── */
 html {
   scroll-behavior: smooth;
 }
 
-/* Scroll-reveal animation base: elements start invisible and translated down.
-   When .in-view is applied (via useInView), they animate into place. */
+/* ── Apple-style scroll-reveal system ─────────────────────────────── */
+
+/* Default reveal: slide up + subtle scale + fade */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(40px) scale(0.97);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .reveal.in-view {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
-/* Stagger delays applied via inline style or utility classes */
+/* Scale-only variant — no vertical movement, just grow into place */
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-scale.in-view {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Fade-only variant — pure opacity, no movement */
+.reveal-fade {
+  opacity: 0;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-fade.in-view {
+  opacity: 1;
+}
+
+/* Slide from left */
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-40px) scale(0.97);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-left.in-view {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+
+/* Slide from right */
+.reveal-right {
+  opacity: 0;
+  transform: translateX(40px) scale(0.97);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-right.in-view {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+
+/* ── Stagger delay classes (100-150ms increments) ─────────────────── */
 .reveal-delay-1 { transition-delay: 0.1s; }
 .reveal-delay-2 { transition-delay: 0.2s; }
 .reveal-delay-3 { transition-delay: 0.3s; }
-.reveal-delay-4 { transition-delay: 0.35s; }
-.reveal-delay-5 { transition-delay: 0.4s; }
-.reveal-delay-6 { transition-delay: 0.45s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-5 { transition-delay: 0.5s; }
+.reveal-delay-6 { transition-delay: 0.6s; }
+.reveal-delay-7 { transition-delay: 0.7s; }
+.reveal-delay-8 { transition-delay: 0.8s; }
 
-/* Respect prefers-reduced-motion: skip all reveal animations */
+/* ── Respect prefers-reduced-motion ───────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
+  .reveal,
+  .reveal-scale,
+  .reveal-fade,
+  .reveal-left,
+  .reveal-right {
     opacity: 1;
     transform: none;
     transition: none;
   }
 }
 
-/* Custom scrollbar styling */
+/* ── Section divider ──────────────────────────────────────────────── */
+.section-divider {
+  height: 1px;
+  max-width: 120px;
+  margin: 0 auto;
+  background: linear-gradient(90deg, transparent, rgba(6,182,212,0.3), transparent);
+}
+.dark .section-divider {
+  background: linear-gradient(90deg, transparent, rgba(6,182,212,0.2), transparent);
+}
+
+/* ── Scroll indicator bounce ──────────────────────────────────────── */
+@keyframes scroll-bounce {
+  0%, 100% { transform: translateY(0); opacity: 0.6; }
+  50% { transform: translateY(8px); opacity: 1; }
+}
+.scroll-indicator {
+  animation: scroll-bounce 2s ease-in-out infinite;
+}
+
+/* ── Glassmorphism navbar ─────────────────────────────────────────── */
+.glass-nav {
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  background: rgba(255, 255, 255, 0.72);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+.dark .glass-nav {
+  background: rgba(15, 23, 42, 0.72);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ── Custom scrollbar styling ─────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 10px;
 }

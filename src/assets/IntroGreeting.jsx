@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useScrollFade } from "./useInView";
 
-export default function IntroGreeting({ name = "Kush Bajaria", role = "Full‑stack web developer" }) {
+export default function IntroGreeting({ name = "Kush Bajaria", role = "Full\u2011stack web developer" }) {
   const [visibleCount, setVisibleCount] = useState(0);
   const [done, setDone] = useState(false);
   const [isDark, setIsDark] = useState(() =>
     typeof document !== "undefined" ? document.documentElement.classList.contains("dark") : true
   );
+
+  // Scroll-driven fade + scale for the hero greeting
+  const scrollFadeRef = useScrollFade({ scaleEnd: 0.92 });
 
   const full = `${name}`;
   const letters = Array.from(full);
@@ -29,7 +33,7 @@ export default function IntroGreeting({ name = "Kush Bajaria", role = "Full‑st
     const mo = new MutationObserver(onThemeChange);
     mo.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
 
-    return () => { 
+    return () => {
       clearInterval(t);
       mo.disconnect();
     };
@@ -41,8 +45,11 @@ export default function IntroGreeting({ name = "Kush Bajaria", role = "Full‑st
   // Respect reduced motion preference
   const prefersReduced = typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  return ( 
-    <div className="absolute inset-x-0 top-1/4 sm:top-1/3 z-30 flex justify-center pointer-events-none">
+  return (
+    <div
+      ref={scrollFadeRef}
+      className="absolute inset-0 z-30 flex items-center justify-center pointer-events-none will-change-transform"
+    >
       <style>{`
         @keyframes letterIn { from { opacity: 0; transform: translateY(10px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
         @keyframes shimmer { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
@@ -119,7 +126,7 @@ export default function IntroGreeting({ name = "Kush Bajaria", role = "Full‑st
         </div>
 
         <p
-          className="mt-3 text-sm md:text-base text-gray-300"
+          className="mt-3 text-sm md:text-base text-gray-500 dark:text-gray-300"
           style={{ opacity: done ? 1 : 0, transition: "opacity 450ms ease", transitionDelay: done ? "220ms" : "0ms" }}
         >
           {role}

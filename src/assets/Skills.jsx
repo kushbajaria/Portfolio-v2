@@ -29,10 +29,10 @@ function SkillCard({ title, children, delay = 0 }) {
         ref={tiltRef}
         onMouseMove={onMove}
         onMouseLeave={onLeave}
-        className="bg-slate-100 dark:bg-slate-800 p-6 rounded-xl shadow-lg transition-transform duration-200 w-full max-w-xs mx-auto flex flex-col justify-between min-h-[140px] border border-slate-200 dark:border-slate-700"
+        className="group bg-slate-50 dark:bg-slate-800/80 p-7 rounded-2xl shadow-lg transition-all duration-300 w-full max-w-xs mx-auto flex flex-col justify-between min-h-[160px] border border-slate-200/60 dark:border-slate-700/60 hover:shadow-xl hover:shadow-cyan-500/10 hover:border-cyan-400/30 dark:hover:border-cyan-400/20"
       >
-        <h3 className="text-lg font-medium text-cyan-600 dark:text-cyan-300 mb-2">{title}</h3>
-        <div className="text-sm text-slate-600 dark:text-gray-300">{children}</div>
+        <h3 className="text-lg font-semibold text-cyan-600 dark:text-cyan-300 mb-3 tracking-tight">{title}</h3>
+        <div className="text-sm text-slate-600 dark:text-gray-300 leading-relaxed">{children}</div>
       </div>
     </div>
   );
@@ -47,7 +47,7 @@ export default function Skills() {
 
   return (
     <div className="w-full mx-auto">
-      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
+      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
         {skills.map((s, i) => (
           <SkillCard key={s.title} title={s.title} delay={i + 1}>
             {s.desc}
