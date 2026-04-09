@@ -10,7 +10,7 @@ function RepoCard({ repo, delay }) {
         href={repo.html_url}
         target="_blank"
         rel="noreferrer"
-        className="group block h-full p-5 rounded-2xl border border-slate-200/60 dark:border-slate-700/40 bg-white/50 dark:bg-slate-800/40 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-slate-200/50 dark:hover:shadow-black/20 hover:border-slate-300 dark:hover:border-slate-600"
+        className="group block h-full p-5 rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-800/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-slate-300/40 dark:hover:shadow-black/30 hover:border-slate-300 dark:hover:border-slate-600"
       >
         <div className="flex items-center gap-2 mb-2">
           <svg
@@ -25,10 +25,10 @@ function RepoCard({ repo, delay }) {
             {repo.name}
           </h3>
         </div>
-        <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed line-clamp-2">
+        <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed line-clamp-2">
           {repo.description || "No description"}
         </p>
-        <div className="mt-3 flex items-center gap-3 text-xs text-slate-400 dark:text-slate-500">
+        <div className="mt-3 flex items-center gap-3 text-xs text-slate-500 dark:text-slate-500">
           {repo.language && (
             <span className="flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-cyan-500/70" />

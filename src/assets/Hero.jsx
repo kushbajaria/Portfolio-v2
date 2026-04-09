@@ -27,11 +27,11 @@ export default function Hero() {
         style={{ opacity: scrolled ? 0 : 1 }}
         aria-hidden="true"
       >
-        <span className="text-[11px] uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500 font-medium">
+        <span className="text-[11px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500 font-medium">
           Scroll
         </span>
         <svg
-          className="scroll-indicator text-slate-400 dark:text-slate-500"
+          className="scroll-indicator text-slate-500 dark:text-slate-500"
           width="20"
           height="20"
           viewBox="0 0 24 24"

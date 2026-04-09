@@ -31,7 +31,7 @@ export default function AboutFull() {
 
         {/* Bio */}
         <div ref={paraRef} className={`mt-5 reveal reveal-delay-2${paraInView ? " in-view" : ""}`}>
-          <p className="text-base md:text-lg leading-relaxed text-slate-500 dark:text-slate-400">
+          <p className="text-base md:text-lg leading-relaxed text-slate-600 dark:text-slate-400">
             Software Engineer studying at California State University, Fullerton.
             I build scalable, user&#8209;focused applications — from AI&#8209;powered
             assistants to multiplayer games and shift&#8209;management platforms.

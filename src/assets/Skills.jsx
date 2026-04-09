@@ -21,7 +21,7 @@ function SkillGroup({ label, items, delay }) {
 
   return (
     <div ref={ref} className={`reveal reveal-delay-${delay}${isInView ? " in-view" : ""}`}>
-      <h3 className="text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-3">
+      <h3 className="text-xs font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-500 mb-3">
         {label}
       </h3>
       <div className="flex flex-wrap gap-2">

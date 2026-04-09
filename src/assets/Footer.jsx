@@ -15,7 +15,7 @@ export default function Footer() {
           <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
             Let's work together
           </h3>
-          <p className="mt-3 text-sm text-slate-500 dark:text-slate-400 max-w-md mx-auto">
+          <p className="mt-3 text-sm text-slate-600 dark:text-slate-400 max-w-md mx-auto">
             Available for freelance or full-time opportunities.
           </p>
         </div>
@@ -74,7 +74,7 @@ export default function Footer() {
           </a>
         </div>
 
-        <p className="mt-12 text-xs text-slate-300 dark:text-slate-600">
+        <p className="mt-12 text-xs text-slate-400 dark:text-slate-600">
           &copy; {year} Kush Bajaria
         </p>
       </div>

@@ -40,7 +40,7 @@ export default function IntroGreeting({ name = "Kush Bajaria", role = "Full\u201
   }, []);
 
   const gradientDark = "linear-gradient(90deg,#e6eef2,#c2c9cc,#9ba3a6)";
-  const gradientLight = "linear-gradient(90deg,#636363,#8f8f8f,#cfcfcf)";
+  const gradientLight = "linear-gradient(90deg,#1e293b,#334155,#475569)";
 
   // Respect reduced motion preference
   const prefersReduced = typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -126,7 +126,7 @@ export default function IntroGreeting({ name = "Kush Bajaria", role = "Full\u201
         </div>
 
         <p
-          className="mt-3 text-sm md:text-base text-gray-500 dark:text-gray-300"
+          className="mt-3 text-sm md:text-base text-slate-600 dark:text-gray-300"
           style={{ opacity: done ? 1 : 0, transition: "opacity 450ms ease", transitionDelay: done ? "220ms" : "0ms" }}
         >
           {role}
